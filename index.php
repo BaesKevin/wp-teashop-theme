@@ -30,18 +30,28 @@
                     </div>
                 </article> -->
 
-                <?php
-                    if(have_posts()) :
-                        while (have_posts()):
-                            the_post();
-                            the_content();
-                        endwhile;
-                    endif;
-                ?>
+                <?php if(have_posts()) : while (have_posts()): the_post(); /* the_post() is the magic function that increases the counter, not documented */?>
+                    <article>
+                        <div class="articleleft">
+                            <h2><?php the_title(); ?></h2>
+                            <div class="articlecontent">
+
+                                <p><?php the_content(); ?></p>
+                                <a href="#">Articlelink</a>
+                            </div>
+                        </div>
+                        <div class="articleright">
+                            <?php if ( has_post_thumbnail() ) : ?>
+                                <?php the_post_thumbnail('thumbnail', array('class' => 'articleicon')); ?>
+                            <?php endif; ?>
+                        </div>
+                    </article>
+                <?php endwhile; ?> 
+                <div class="nav-previous alignleft"><?php previous_posts_link( 'Older posts' ); ?></div>
+                <div class="nav-next alignright"><?php next_posts_link( 'Newer posts' ); ?></div>
+                <?php endif; ?>
             </section>
-            <aside class="sidebar">
-                sidebarcontent
-            </aside>
+            <?php get_sidebar( 'primary' ); ?>
         </main>
         <?php get_footer(); ?>
     </div>
